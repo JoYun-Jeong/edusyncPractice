@@ -6,8 +6,12 @@ import { StyleSheet, Text, View } from "react-native";
 import SplashScreen from "./screens/SplashScreen";
 import { useFonts } from "expo-font";
 import LoginScreen from "./screens/LoginScreen";
-import MainTab from "./screens/MainTab";
 import Header from "./components/Header";
+import { enableScreens } from "react-native-screens";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import HomeScreen from "./screens/HomeScreen";
+import ClassManagementScreen from "./screens/ClassManagementScreen";
+import MainTab from "./screens/MainTab";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,15 +33,15 @@ export default function App() {
         </Stack.Screen>
         <Stack.Screen
           name="LoginScreen"
-          component={() => (
-            <LoginScreen
-              onPress={() => {
-                setIsLogin(true);
-              }}
-            />
-          )}
           options={{ headerShown: false }}
-        />
+        >
+          {(props) => <LoginScreen
+            {...props}
+            onPress={() => {
+              setIsLogin(true);
+            }}
+          />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

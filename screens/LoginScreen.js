@@ -15,6 +15,7 @@ export default function LoginScreen({ navigation, onPress }) {
     setTimeout(() => {
         onPress();
     }, 300);
+    console.log("asd");
   }
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -23,7 +24,7 @@ export default function LoginScreen({ navigation, onPress }) {
   }));
 
   return (
-    <Animated.View style={[animatedStyle, {flex: 1}]}>
+    <Animated.View style={[animatedStyle, {flex: 1}]} pointerEvents={"auto"}>
         <SafeAreaView style={styles.safeAreaContainer}>
       <ScrollView style={{ flex: 1 }}>
         <View style={[styles.container, animatedStyle]}>

@@ -15,19 +15,24 @@ enableScreens();
 
 export default function MainTab() {
   const [homeWidth, setHomeWidth] = useState(0);
+  const [classManagementWidth, setClassManagementWidth] = useState(0);
+
+  const [isAddNewClassBtnPressed, setIsAddNewClassBtnPressed] = useState(false);
+  const [stacks, setStacks] = useState([]);
+
   return (
     <>
       <Header />
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => {
-            const currentWidth = route.name === 'Home' ? homeWidth : 50;
+            const currentWidth = route.name === 'Home' ? homeWidth : classManagementWidth;
             const tabWidth = screenWidth / tabCount;
-            const translateX = (tabWidth - currentWidth) / 2;
+            const translateX = route.name === 'Home' ? (tabWidth - currentWidth) / 2 - 5 : (tabWidth + classManagementWidth);
             return {
                 tabBarIndicatorStyle: {
                     backgroundColor: "black",
-                    width: route.name === "Home" ? homeWidth : 50,
+                    width: route.name === "Home" ? homeWidth + 10 : classManagementWidth + 10,
                     position: "absolute",
                     transform: [{translateX}]
                   }
@@ -48,9 +53,19 @@ export default function MainTab() {
           />
           <Tab.Screen
             name="ClassManagement"
-            component={ClassManagementScreen}
-            options={{ title: "수업 관리" }}
-          />
+            options={{ title: "수업 관리",
+              tabBarLabel: ({ color }) => (
+                <Text onLayout={(event) => setClassManagementWidth(event.nativeEvent.layout.width)}>
+                  수업 관리
+                </Text>
+              )
+             }}
+          >
+            {() => <ClassManagementScreen addNewClassBtnPress={(stackName) => {
+              setIsAddNewClassBtnPressed(true);
+              setStacks((prevStacks) => [...prevStacks, stackName]);
+            }}/>}
+          </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
     </>

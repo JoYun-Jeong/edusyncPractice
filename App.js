@@ -12,6 +12,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import HomeScreen from "./screens/HomeScreen";
 import ClassManagementScreen from "./screens/ClassManagementScreen";
 import MainTab from "./screens/MainTab";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,23 +25,24 @@ export default function App() {
   const [isLogin, setIsLogin] = useState(false);
 
   return isLogin ? (
-    <MainTab />
+    <GestureHandlerRootView>
+      <MainTab />
+    </GestureHandlerRootView>
   ) : (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="SplashScreen" options={{ headerShown: false }}>
           {(props) => <SplashScreen {...props} loaded={loaded} />}
         </Stack.Screen>
-        <Stack.Screen
-          name="LoginScreen"
-          options={{ headerShown: false }}
-        >
-          {(props) => <LoginScreen
-            {...props}
-            onPress={() => {
-              setIsLogin(true);
-            }}
-          />}
+        <Stack.Screen name="LoginScreen" options={{ headerShown: false }}>
+          {(props) => (
+            <LoginScreen
+              {...props}
+              onPress={() => {
+                setIsLogin(true);
+              }}
+            />
+          )}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
